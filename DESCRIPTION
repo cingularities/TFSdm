@@ -1,0 +1,19 @@
+Package: TFSDataMonitoring
+Title: Package automates certain photovoltaic data monitoring tasks.
+Version: 1.0
+Authors@R: 
+    person(given = "Cynthia",
+           family = "Norton",
+           role = c("aut", "cre"),
+           email = "cindy@tfssolar.com",
+Description: Package automates certain photovoltaic data monitoring tasks.
+Import:
+	dplyr,
+	fuzzyjoin,
+	plyr
+License: `use_mit_license()`, `use_gpl3_license()` or friends to
+    pick a license
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
