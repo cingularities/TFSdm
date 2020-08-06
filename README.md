@@ -1,2 +1,2 @@
 # TFSDataMonitoring
-Functions for automating tasks for monitoring photovoltaic data.
+Functions for automating tasks regarding monitoring photovoltaic data.
