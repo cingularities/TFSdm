@@ -1,0 +1,81 @@
+FACILITY.NAME,JOB.NAME,Address,City,State,Postal,Home.Phone,Mobile.Phone,Email,Email.Two,Notes,Region,Installation.Date,Job.Notes,Job.Address,SystemDescription,EquipmentNotes,ComNotes,ServiceNotes,Job.Type.Classification,StatusCode,MonitorCode,PvEstMonthlyProd,JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,DEC,PvEstYearlyProd,PORTAL.NAME
+"Powell, Brian and Leza Carter",Powell Brian PV,527 E Roger Rd.,Tucson,AZ,85705,(520)305-2025,,brianforbespowell@gmail.com,,,Central,########,"02.26.18 REV 1 SUBMITTED & APPROVED. Scanned, filed, on board. - mp
+
+02.22.18 OPEN REV. Single plane broken up into single module high panels to avoid shading neighbor's array.-mcc cc. eh, kr, mc, mp, sh, tl, jr. 
+
+02.02.18 Labels in folder. - mp
+
+01.22.18 Permit APPROVED. Scanned, filed, in folder. - mp
+
+01.16.18 Permit SUBMITTED. - mp",527 E Roger Rd.  Tucson AZ 85705,"11 Hanwha Q-Cells 295 watt modules
+
+1 SolarEdge 3800 inverter with P300 power optimizers w/ DM ",,"No OOT; no dog; yes roofing (but no coordination); yes HOA; no gate code
+
+293501375. Leza Carter","12/2/19: Installed new inverter 731FC3C9-1E from inventory. JG
+
+11/26/19: Opened case with SE to initiate RMA case 1641004. KL
+
+11/26/19: Checking DM site found this at the top of the list. SE site was down previous day for some time so error didn't show until this morning. Site says 181 internal error.MK
+
+6.21.19: Left voicemail to schedule DM visit. Emailing too. KL
+
+6.18.19 Inverter replaced by rm. TL
+
+6/3/19: Inverter down with 18XB7 error.MK and KL issued RMA on 5.28.19 approved with case no 1408837. KL
+
+9.19.18: Asked client to reset Gateway as they have in the past SM
+
+4.26.18: Reset Gateway, got back online, but there is a data lag that I will be watching SM
+
+4.5.18: No production since 4/3/18. Client emailed SM",Residential,Job Completed,SolarEdge,438,367.92,357.408,483.552,509.832,515.088,494.064,452.016,467.784,457.272,436.248,373.176,341.64,5256,"Powell, Brian & Leza Carter"
+"Rao, Mallika and PJ Casey",Rao Mallika PV,3928 N Fontana Ave.,Tucson,AZ,85705,(520)292-9090,,mallikacaseyrao@hotmail.com,raom@flowingwells.k12.az,"Stopping internet beginning August 2019 - will send production updates via email.
+
+
+
+Best to contact PJ on his cell 520-292-9090, in case of emergency, you can call me at 520-861-1772, but I cannot get to my phone during work hours.",Central,########,"06.19.19 Labels in folder. - mp
+
+06.05.19 Permit SUBMITTED & APPROVED. Scanned, filed, in folder. - mp",3928 N Fontana Ave.  Tucson AZ 85705,"9 LG 365 watt modules, 1 Solaredge 5000H grid-tied inverter, 9 P400 optimizers and data monitoring (Stopping internet beginning August 2019 - will send production updates via email)",,"Thanks for following up. I added PJ's email to this email, he is probably faster about returning emails than I am, so better to email him.
+
+1. We dont have any big travel plans, but we usually spontaneously go camping for a weekend here and there, usually Sun -Tuesdays, but we can work around the install schedule you guys have. 
+
+2. We have a dog, but he is denced in with a 6 foot fence limiting him to the back yard and house only.  The electric panels are accessible via front yard fence and he cannot get to it. 
+
+3. No roof work planned
+
+4. No HOA.
+
+5. Best to contact PJ on his cell 520-292-9090, in case of emergency, you can call me at 520-861-1772, but I cannot get to my phone during work hours.
+
+6. No gate code, no lock.
+
+7. TEP names: Patrick J. Casey and Mallika P. Rao. I think we are both on the bill.",8/16/19 Customer does not have wifi. He will send solar meter reading to dm@tfssolar.com once a month. TL,Residential,Job Completed,SolarEdge,478,401.52,390.048,527.712,556.392,562.128,539.184,493.296,510.504,499.032,476.088,407.256,372.84,5736,"Rao, Mallika and PJ Casey"
+"Burney, Carol",Burney Carol PV,3594 W Nestled Desert Pl.,Tucson,AZ,85742,(520)721-7523,(520)288-9955,burneyhounds@yahoo.com,,,Northwest,########,"12.18.18: OPEN REV1 - Module layout changed, 10 mod. panel now 4 + 6 to avoid newly added solar tube.
+
+11.27.18 Labels in folder. - mp
+
+11.15.18 Permit SUBMITTED. - mp
+
+08.27.18 There is an old extra meter socket for hot water. Per DS email on 8.27, We will leave the analog meter/socket as they are, and will install the DG meter socket as usual. TL",3594 W Nestled Desert Pl.  Tucson AZ 85742,"10 LG 360; 1 Solaredge 3800H, 10 P400 optimizers; DM",,"1.  No travel planned for February
+
+2.  My dogs are inside dogs and I will be home in any event during installation
+
+3.  I have no roof work planned
+
+4.  My HOA allows rooftop solar without objection
+
+5.  My home phone is 520-721-7523; my cell is 520-288-9955
+
+6.  This is not a gated community and my fence gate will be open for you
+
+7.  My TEP account is 5997647618 and the name on the bill is Carol Burn",,Residential,Job Completed,SolarEdge,493,414.12,402.288,544.272,573.852,579.768,556.104,508.776,526.524,514.692,491.028,420.036,384.54,5916,"Burney, Carol"
+"Bednarksi, Alan",Bednarski Alan PV,7935 N Higgins Feather Dr.,Tucson,AZ,85743,(520)572-4038,,abednarski@comcast.net,SheriffBaker@comcast.net,,Marana,8/17/2011,,7935 N Higgins Feather Dr.  Tucson AZ 85743,22 Schott Poly 240; SMA 5000US; Sunny WebBox,,,,Residential,Job Completed,SMA,766,643.44,625.056,845.664,891.624,900.816,864.048,790.512,818.088,799.704,762.936,652.632,597.48,9192,Bednarski
+"Cosentino, Cosimo and Kari",Cosentino Cosimo PV,9209 S Tree House Ln.,Tucson,AZ,85756,(520)722-3829,(520)241-0689,cosimocosentino@msn.com,,Sent bid for tesla powerwalls 12/17/18 kk,Southeast,2/8/2016,"01.28.16 Permit APPROVED. Scanned, filed, in folder. - mfp
+01.27.16 Labels in folder. - mfp
+01.21.16 Permit SUBMITTED. Labels ordered. - mfp",9209 S Tree House Ln.  Tucson AZ 85756,"32 LG 315; 1 SMA 3800 TL and 1 SMA 5000 TL; WebBox
+Downsize main breaker to 175A",,"very flexible, inside dog, no roofing, yes HOA but approval not necessary   Kari A Cosentino	 acct no 9605103877",,Residential,Job Completed,SMA,1447,1215.48,1180.752,1597.488,1684.308,1701.672,1632.216,1493.304,1545.396,1510.668,1441.212,1232.844,1128.66,17364,Cosentino
+"Michael, Greg",Michael Greg PV,750 N Janal Cir.,Tucson,AZ,85710,(520)271-5535,,gcm516@gmail.com,,,East of Swan,5/17/2010,"Need to coordinate standoff installation with customer prior to install, he is doing his own roofing",750 N Janal Cir.  Tucson AZ 85710,22 Schott 225; SMA6000US; WebBox,"Ordered 22 Schott 225s (instead of 220s, need to notify TEP and customer). -03.23.10
+Use SMA6000US and WebBox in stock. -03.23.10","Need to coordinate standoff installation with roofer prior to install
+notified TEP re: upgrade from 220s to 225s -am 03.24.10
+sent customer revised proposal -am 03.24.10","6.27.19. Sent email regarding down DM. Went offline in January - CN
+5.15.18: DM offline 5/3/18. Client emailed SM
+4/7/2016 DM service call. MK",Residential,Job Completed,SMA,718,603.12,585.888,792.672,835.752,844.368,809.904,740.976,766.824,749.592,715.128,611.736,560.04,8616,"Michael, Greg"
