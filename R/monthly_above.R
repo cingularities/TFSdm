@@ -8,14 +8,19 @@
 #' @examples
 #' monthly_positive_deviation(sma_performance,se_performance,estimates,status)
 
-
+#Function
 monthly_positive_deviation <- function(sma_performance,se_performance,estimates,status) {
-  se_filter <- left_join(se_performance %>% select(PORTAL.NAME,MONTH), estimates %>% select(PORTAL.NAME,Email, Installation.Date,JOB.NAME,MonitorCode,AUG,PvEstMonthlyProd), by = "PORTAL.NAME")
-  sma_filter <- left_join(sma_performance, estimates %>% select(PORTAL.NAME,Email, Installation.Date,JOB.NAME,MonitorCode,AUG,PvEstMonthlyProd), by = "PORTAL.NAME")
+  se_filter <- left_join(se_performance %>% select(PORTAL.NAME,MONTH),
+          estimates %>% select(PORTAL.NAME,Email,
+          Installation.Date,JOB.NAME,MonitorCode,AUG,PvEstMonthlyProd), by = "PORTAL.NAME")
+  sma_filter <- left_join(sma_performanc %>% select(PORTAL.NAME,MONTH),
+          estimates %>% select(PORTAL.NAME,Email,
+          Installation.Date,JOB.NAME,MonitorCode,AUG,PvEstMonthlyProd), by = "PORTAL.NAME")
   se_sma_bind <- rbind(se_filter, sma_filter)
   se_sma_deviation <- se_sma_bind %>%
     transform(PERFORMANCE = as.numeric(MONTH)/as.numeric(AUG))%>%
     left_join(status %>% select(PORTAL.NAME,STATUS, CATEGORY), by = "PORTAL.NAME")
-  positive <- filter(se_sma_deviation, PERFORMANCE > 0.85)
+  positive <- filter(se_sma_deviation, PERFORMANCE >  0.85)
   distinct(positive, PORTAL.NAME, .keep_all= TRUE)
+  return(positive)
 }
