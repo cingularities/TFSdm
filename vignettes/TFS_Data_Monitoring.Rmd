@@ -1,0 +1,100 @@
+---
+title: "TFS Data Monitoring Functions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{dataMonitoring}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The functions within the library are to automate photovoltaic data monitoring tasks for higher effciency work flow.
+
+## Load Library
+
+```{r setup}
+library(TFSDataMonitoring)
+
+```
+## Import data
+```{r}
+Files <- lapply(list.files(system.file('extdata', package = 'TFSDataMonitoring'), 
+                           full.names = TRUE), read.csv)
+```
+
+## Functions
+### Data Monitoring Down Check
+dm_down merges photvoltaic monitoring data with administrative information and client site status.
+Exported data results in a list of current down systems, their status and customer job information.
+```{r}
+dm_down<- function(se, sma, sp, status, clients) {
+  se_filter <- se %>%
+    filter(Severity == "High" | Severity == "Low" | Severity == "No Data" | kWh == "0") %>%
+    left_join(status, by = "PORTAL.NAME")
+  sma_filter <- sma %>%
+    filter(YESTERDAY == "No data" | YESTERDAY == "0") %>%
+    left_join(status, by = "PORTAL.NAME")
+  sp_filter <- sp %>%
+    filter(Status == "Open") %>%
+    left_join(status, by = "PORTAL.NAME")
+  se_final <- left_join(se_filter %>% select(PORTAL.NAME, STATUS, CATEGORY),
+                        clients, by = "PORTAL.NAME")
+  sma_final <- left_join(sma_filter %>% select(PORTAL.NAME, STATUS, CATEGORY),
+                         clients, by = "PORTAL.NAME")
+  sp_final <- left_join(sp_filter %>% select(PORTAL.NAME, STATUS, CATEGORY),
+                        clients, by = "PORTAL.NAME")
+  se_sma_sp <- rbind(se_final, sma_final, sp_final)
+  se_sma_sp <- distinct(se_sma_sp, PORTAL.NAME, .keep_all= TRUE)
+  return(se_sma_sp)
+}
+
+
+```
+
+## Monthly Production Check
+monthly_negative_deviation divides current monthly production with company estimates and merges with customer information and site status. Exported data is a list of under-performing sites and possible issues.
+```{r}
+monthly_negative_deviation <- function(sma_performance,se_performance,estimates,status) {
+  se_filter <- left_join(se_performance %>% select(PORTAL.NAME,MONTH),
+          estimates %>% select(PORTAL.NAME,Email,
+          Installation.Date,JOB.NAME,MonitorCode,AUG,PvEstMonthlyProd), by = "PORTAL.NAME")
+  sma_filter <- left_join(sma_performanc %>% select(PORTAL.NAME,MONTH),
+          estimates %>% select(PORTAL.NAME,Email,
+          Installation.Date,JOB.NAME,MonitorCode,AUG,PvEstMonthlyProd), by = "PORTAL.NAME")
+  se_sma_bind <- rbind(se_filter, sma_filter)
+  se_sma_deviation <- se_sma_bind %>%
+    transform(PERFORMANCE = as.numeric(MONTH)/as.numeric(AUG))%>%
+    left_join(status %>% select(PORTAL.NAME,STATUS, CATEGORY), by = "PORTAL.NAME")
+  negative <- filter(se_sma_deviation, PERFORMANCE < 0.85)
+  distinct(negative, PORTAL.NAME, .keep_all= TRUE)
+  return(negative)
+}
+```
+
+## Yearly Production Check
+yearly_positive_deviation divides current yearly production with company estimates and merges with customer information and site status. Exported data is a list of sites that met or exceeded yearly estimates.
+```{r}
+
+yearly_positive_deviation <- function(sma_performance,se_performance,estimates,status) {
+  se_filter <- left_join(se_performance %>% select(PORTAL.NAME,YEAR),
+            estimates %>% select(PORTAL.NAME,Address,City,State,Postal,Email,
+            Installation.Date,JOB.NAME,MonitorCode,PvEstYearlyProd), by = "PORTAL.NAME")
+  sma_filter <- left_join(sma_performance %>% select(PORTAL.NAME,YEAR),
+            estimates %>% select(PORTAL.NAME,Address,City,State,Postal,Email,
+            Installation.Date,JOB.NAME,MonitorCode,PvEstYearlyProd), by = "PORTAL.NAME")
+  se_sma_bind <- rbind(se_filter, sma_filter)
+  se_sma_deviation <- se_sma_bind %>%
+    transform(PERFORMANCE = (as.numeric(YEAR)/PvEstYearlyProd)*100)%>%
+  positive <- filter(se_sma_deviation, PERFORMANCE > 95.0)
+  distinct(positive, PORTAL.NAME, .keep_all= TRUE)
+  return(positive)
+}
+
+```
+
