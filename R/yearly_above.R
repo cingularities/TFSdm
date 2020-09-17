@@ -9,14 +9,19 @@
 #' yearly_positive_deviation(sma_performance,se_performance,estimates,status)
 
 
-
+#Function
 yearly_positive_deviation <- function(sma_performance,se_performance,estimates,status) {
-  se_filter <- left_join(se_performance %>% select(PORTAL.NAME,YEAR), estimates %>% select(PORTAL.NAME,Address,City,State,Postal,Email,Installation.Date,JOB.NAME,MonitorCode,PvEstYearlyProd), by = "PORTAL.NAME")
-  sma_filter <- left_join(sma_performance %>% select(PORTAL.NAME,YEAR), estimates %>% select(PORTAL.NAME,Address,City,State,Postal,Email,Installation.Date,JOB.NAME,MonitorCode,PvEstYearlyProd), by = "PORTAL.NAME")
+  se_filter <- left_join(se_performance %>% select(PORTAL.NAME,YEAR),
+            estimates %>% select(PORTAL.NAME,Address,City,State,Postal,Email,
+            Installation.Date,JOB.NAME,MonitorCode,PvEstYearlyProd), by = "PORTAL.NAME")
+  sma_filter <- left_join(sma_performance %>% select(PORTAL.NAME,YEAR),
+            estimates %>% select(PORTAL.NAME,Address,City,State,Postal,Email,
+            Installation.Date,JOB.NAME,MonitorCode,PvEstYearlyProd), by = "PORTAL.NAME")
   se_sma_bind <- rbind(se_filter, sma_filter)
   se_sma_deviation <- se_sma_bind %>%
     transform(PERFORMANCE = (as.numeric(YEAR)/PvEstYearlyProd)*100)%>%
-    left_join(status %>% select(PORTAL.NAME,STATUS, CATEGORY), by = "PORTAL.NAME")
   positive <- filter(se_sma_deviation, PERFORMANCE > 95.0)
   distinct(positive, PORTAL.NAME, .keep_all= TRUE)
+  return(positive)
 }
+
