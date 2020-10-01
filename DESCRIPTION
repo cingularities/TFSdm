@@ -7,7 +7,8 @@ Description: Package automates certain photovoltaic data monitoring tasks.
 Import:
 	dplyr,
 	fuzzyjoin,
-	plyr
+	plyr,
+	readr
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
 Encoding: UTF-8
