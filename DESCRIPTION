@@ -7,7 +7,6 @@ Description: Package automates certain photovoltaic data monitoring tasks.
 Depends:
 	dplyr,
 	fuzzyjoin,
-	plyr,
 	tidyverse
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
