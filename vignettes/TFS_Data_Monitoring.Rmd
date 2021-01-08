@@ -97,4 +97,3 @@ yearly_positive_deviation <- function(sma_performance,se_performance,estimates,s
 }
 
 ```
-

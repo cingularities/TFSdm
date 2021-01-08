@@ -8,7 +8,7 @@
 #' @examples
 #' yearly_negative_deviation(sma_performance,se_performance,estimates,status)
 
-#Function
+
 yearly_negative_deviation <- function(sma_performance,se_performance,estimates,status) {
   se_filter <- left_join(se_performance %>% select(PORTAL.NAME,YEAR),
             estimates %>% select(PORTAL.NAME,Address,City,State,Postal,Email,

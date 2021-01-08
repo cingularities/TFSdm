@@ -8,7 +8,7 @@
 #' @examples
 #' monthly_positive_deviation(sma_performance,se_performance,estimates,status)
 
-#Function
+
 monthly_positive_deviation <- function(sma_performance,se_performance,estimates,status) {
   se_filter <- left_join(se_performance %>% select(PORTAL.NAME,MONTH),
           estimates %>% select(PORTAL.NAME,Email,

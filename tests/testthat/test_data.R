@@ -1,5 +1,13 @@
 context("Data loading and column count")
 
+library(testthat)
+library(TFSDataMonitoring)
+library(dplyr)
+library(fuzzyjoin)
+library(plyr)
+library(readr)
+
+
 
 test_that("Locating data file in package",
           {
@@ -13,7 +21,7 @@ test_that("Locating data file in package",
 test_that(
   "Checking column result expectations",
   {
-    se_file<- system.file("insta/extdata", "se.csv")
+    se_file<- read_csv("insta/extdata/se.csv")
     se<- readr::read_csv(se_file)
     sma_file <- system.file("insta/extdata", "sma.csv")
     sma<- readr::read_csv(sma_file)
