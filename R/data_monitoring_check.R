@@ -7,10 +7,10 @@
 #' @return Updated recent down data monitoring data.frame as an object, and also written to recent_down_dm.csv.
 #' @export
 #' @examples
-#' dm_down<- function(se, sma, sp, status, clients)
+#' data_monitoring_check<- function(se, sma, sp, status, clients)
 
 ##FUNCTION
-dm_down<- function(se, sma, sp, status, clients) {
+data_monitoring_check<- function(se, sma, sp, status, clients) {
   se_filter <- se %>%
     filter(Severity == "High" | Severity == "Low" | Severity == "No Data" | kWh == "0") %>%
     left_join(status, by = "PORTAL.NAME")
