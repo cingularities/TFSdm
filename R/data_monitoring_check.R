@@ -20,11 +20,11 @@ data_monitoring_check<- function(se, sma, sp, status, clients) {
   sp_filter <- sp %>%
     filter(Status == "Open") %>%
     left_join(status, by = "PORTAL.NAME")
-  se_final <- left_join(se_filter %>% select(PORTAL.NAME, STATUS, CATEGORY),
+  se_final <- left_join(se_filter %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE,	YEAR,	NOTES),
                         clients, by = "PORTAL.NAME")
-  sma_final <- left_join(sma_filter %>% select(PORTAL.NAME, STATUS, CATEGORY),
+  sma_final <- left_join(sma_filter %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE,	YEAR,	NOTES),
                          clients, by = "PORTAL.NAME")
-  sp_final <- left_join(sp_filter %>% select(PORTAL.NAME, STATUS, CATEGORY),
+  sp_final <- left_join(sp_filter %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE,	YEAR,	NOTES),
                         clients, by = "PORTAL.NAME")
   se_sma_sp <- rbind(se_final, sma_final, sp_final)
   se_sma_sp <- distinct(se_sma_sp, PORTAL.NAME, .keep_all= TRUE)
