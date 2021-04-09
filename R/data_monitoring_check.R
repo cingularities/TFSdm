@@ -17,7 +17,7 @@ data_monitoring_check<- function(se_raw, sma_raw, sp_raw, lg_raw, status, client
         rename_(PORTAL.NAME = 1, Severity = 2, kWh =3) %>%
         mutate(PORTAL.SERVER = "SE")
       se_filter <- se %>%
-        filter(Severity > "1" | kWh == "0") %>% #filters sites that have high and low severity, no data and 0 production
+        filter(Severity > "0" | kWh == "0") %>% #filters sites that have high and low severity, no data and 0 production
         left_join(status %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME") #joins recent down dm list with current portal status
       sma <- sma_raw %>% select(-c(2,3,5,6,7,8,9)) %>%
         rename_(PORTAL.NAME = 1, YESTERDAY = 2) %>%
@@ -51,3 +51,4 @@ data_monitoring_check<- function(se_raw, sma_raw, sp_raw, lg_raw, status, client
       se_sma_sp_lg <- distinct(se_sma_sp_lg, PORTAL.NAME, .keep_all= TRUE) #removes duplicates, mostly SP multiple alert system
       return(se_sma_sp_lg) #returns the final file
     }
+
