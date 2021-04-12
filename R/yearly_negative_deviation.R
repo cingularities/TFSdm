@@ -8,33 +8,29 @@
 #' @examples
 #' yearly_negative_deviation(sma_performance,se_performance,estimates,status)
 
-monthly_negative_deviation <- function(sma_performance_raw,se_performance_raw,estimates,status) {
+yearly_negative_deviation <- function(sma_performance,se_performance,estimates,status) {
   se_performance <- se_performance_raw %>% select(-c(1,3)) %>%
     slice(-c(1:8)) %>%
-    rename_(PORTAL.NAME = 1, MONTH = 2) %>%
+    rename_(PORTAL.NAME = 1, YEAR = 2) %>%
     mutate(PORTAL.SERVER = "SE")  %>%
-    select(PORTAL.NAME, MONTH, PORTAL.SERVER) %>%
-    left_join(estimates %>% select(PORTAL.NAME,Email, 
-                                Installation.Date,JOB.NAME,MonitorCode,MAR,PvEstMonthlyProd), by = "PORTAL.NAME") %>%
-    left_join(status %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME")%>% #joins recent down dm list with current portal status
-    distinct(PORTAL.NAME, .keep_all= TRUE)
+    select(PORTAL.NAME, YEAR, PORTAL.SERVER) %>%
+    left_join(estimates %>% select(PORTAL.NAME,Address,City,State,Postal,Email,Installation.Date,JOB.NAME,MonitorCode,PvEstYearlyProd), by = "PORTAL.NAME")
   
   sma_performance <- sma_performance_raw %>% select(-c(2,3,4,6,7,8)) %>%
     rename_(PORTAL.NAME = 1, MONTH = 2, YEAR = 3) %>%
     mutate(PORTAL.SERVER = "SMA") %>%
-    select(PORTAL.NAME, MONTH, PORTAL.SERVER) %>%
-    left_join(estimates %>% select(PORTAL.NAME,Email, 
-                                   Installation.Date,JOB.NAME,MonitorCode,MAR,PvEstMonthlyProd), by = "PORTAL.NAME") %>%
-    left_join(status %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME")%>% #joins recent down dm list with current portal status
-    distinct(PORTAL.NAME, .keep_all= TRUE)
+    select(PORTAL.NAME, YEAR, PORTAL.SERVER) %>%
+    left_join(estimates %>% select(PORTAL.NAME,Address,City,State,Postal,Email,Installation.Date,JOB.NAME,MonitorCode,PvEstYearlyProd), by = "PORTAL.NAME")
   
   se_sma_bind <- rbind(se_performance, sma_performance)
-  
+ 
   se_sma_deviation <- se_sma_bind %>%
-    transform(PERFORMANCE = as.numeric(MONTH)/as.numeric(MAR))%>%
+    transform(PERFORMANCE = (as.numeric(YEAR)/PvEstYearlyProd)*100)%>%
     left_join(status %>% select(PORTAL.NAME,STATUS, CATEGORY), by = "PORTAL.NAME")
   
-  negative <- filter(se_sma_deviation, PERFORMANCE < 0.85)
+  negative <- filter(se_sma_deviation, PERFORMANCE < 95.0)
+ 
+  distinct(negative, PORTAL.NAME, .keep_all= TRUE)
   
   return(negative)
 }
