@@ -12,43 +12,42 @@
 
 ##FUNCTION
 data_monitoring_check<- function(se_raw, sma_raw, sp_raw, lg_raw, status, clients) {
-      se <- se_raw %>% select(-c(1,3)) %>%
-        slice(-c(1:8)) %>%
-        rename_(PORTAL.NAME = 1, Severity = 2, kWh =3) %>%
-        mutate(PORTAL.SERVER = "SE")
-      se_filter <- se %>%
+      se <- se_raw %>% select(-c(1,3)) %>% #removes unwanted columns
+        slice(-c(1:8)) %>% #removes unwanted rows
+        rename(PORTAL.NAME = 1, Severity = 2, kWh =3) %>% #renames columns
+        mutate(PORTAL.SERVER = "SE")  %>% #adds PORTAL.SERVER column
         filter(Severity > "0" | kWh == "0") %>% #filters sites that have high and low severity, no data and 0 production
-        left_join(status %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME") #joins recent down dm list with current portal status
-      sma <- sma_raw %>% select(-c(2,3,5,6,7,8,9)) %>%
-        rename_(PORTAL.NAME = 1, YESTERDAY = 2) %>%
-        mutate(PORTAL.SERVER = "SMA")
-      sma_filter <- sma %>%
+        select(PORTAL.NAME, PORTAL.SERVER) %>% #selects columns wanted
+        left_join(status %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME")%>% #joins recent down dm list with current portal status
+        left_join(clients, by = "PORTAL.NAME") #joins filtered & joined recent down dm list with the portal key to gather FACILITY.NAME and JOB.NAME
+      
+      sma <- sma_raw %>% select(-c(2,3,5,6,7,8,9)) %>% #removes unwanted columns
+        rename(PORTAL.NAME = 1, YESTERDAY = 2) %>% #renames column
+        mutate(PORTAL.SERVER = "SMA")%>% #adds PORTAL.SERVER column
         filter(YESTERDAY == "No data" | YESTERDAY == "0") %>% #filters sites that have no data and 0 production
-        left_join(status %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME") #joins recent down dm list with current portal status
-      sp <- sp_raw %>% select(-c(2,4,8,9,10)) %>%
-        rename_(PORTAL.NAME = 1) %>%
-        mutate(PORTAL.SERVER = "SP") %>%
-        mutate(PORTAL.NAME = str_squish(PORTAL.NAME))
-      sp_filter <- sp %>% 
+        select(PORTAL.NAME, PORTAL.SERVER)%>% #selects columns wanted
+        left_join(status %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME")%>% #joins recent down dm list with current portal status
+        left_join(clients, by = "PORTAL.NAME")#joins filtered & joined recent down dm list with the portal key to gather FACILITY.NAME and JOB.NAME
+      
+      sp <- sp_raw %>% select(-c(2,4,8,9,10)) %>% #removes unwanted columns 
+        rename(PORTAL.NAME = 1) %>% #renames column
+        mutate(PORTAL.SERVER = "SP") %>% #adds PORTAL.SERVER column
+        mutate(PORTAL.NAME = str_squish(PORTAL.NAME))%>% #removes double spaces
         filter(Status == "Open") %>% #filters sites that have open alerts
-        left_join(status %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME") #joins recent down dm list with current portal status
-      sp_filter <- distinct(sp_filter, PORTAL.NAME, .keep_all= TRUE) #removes duplicates
-      lg <- lg_raw %>% select(-c(1,5,6,7,8,9,10,11)) %>%
-        rename_(PORTAL.NAME = 1) %>%
-        mutate(PORTAL.SERVER = "LG")
-      lg_filter <- lg %>%
+        select(PORTAL.NAME, PORTAL.SERVER) %>% #selects the columns we want
+        left_join(status %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME")%>% #joins recent down dm list with current portal status
+        left_join(clients, by = "PORTAL.NAME")%>% #joins filtered & joined recent down dm list with the portal key to gather FACILITY.NAME and JOB.NAME
+        distinct(PORTAL.NAME, .keep_all= TRUE) #removes duplicates
+    
+      lg <- lg_raw %>% select(-c(1,5,6,7,8,9,10,11)) %>% #removes unwanted columns
+        rename(PORTAL.NAME = 1) %>% #renames column
+        mutate(PORTAL.SERVER = "LG") %>% #adds PORTAL.SERVER column
         filter(Status != "Normal") %>% #filters sites are not in a normal state
-        left_join(status %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME") #joins recent down dm list with current portal status
-      se_final <- left_join(se_filter %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES, PORTAL.SERVER), ##joins filtered & joined recent down dm list with the portal key to gather FACILITY.NAME and JOB.NAME
-                            clients, by = "PORTAL.NAME")
-      sma_final <- left_join(sma_filter %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES, PORTAL.SERVER), ##joins filtered & joined recent down dm list with the portal key to gather FACILITY.NAME and JOB.NAME
-                             clients, by = "PORTAL.NAME")
-      sp_final <- left_join(sp_filter %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES, PORTAL.SERVER), ##joins filtered & joined recent down dm list with the portal key to gather FACILITY.NAME and JOB.NAME
-                            clients, by = "PORTAL.NAME")
-      lg_final <- left_join(lg_filter %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES, PORTAL.SERVER), ##joins filtered & joined recent down dm list with the portal key to gather FACILITY.NAME and JOB.NAME
-                            clients, by = "PORTAL.NAME")
-      se_sma_sp_lg <- rbind(se_final, sma_final, sp_final, lg_final)  #binds all sites to one list
+        select(PORTAL.NAME, PORTAL.SERVER) %>% #selects the columns we want
+        left_join(status %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME")%>% #joins recent down dm list with current portal status
+        left_join(clients, by = "PORTAL.NAME")#joins filtered & joined recent down dm list with the portal key to gather FACILITY.NAME and JOB.NAME
+
+      se_sma_sp_lg <- rbind(se, sma, sp, lg)  #binds all sites to one list
       se_sma_sp_lg <- distinct(se_sma_sp_lg, PORTAL.NAME, .keep_all= TRUE) #removes duplicates, mostly SP multiple alert system
       return(se_sma_sp_lg) #returns the final file
     }
-
