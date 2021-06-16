@@ -23,8 +23,6 @@ data_monitoring_check<- function(se_raw, sma_raw, sp_raw, lg_raw, status, client
       
       sma <- sma_raw %>% select(-c(2,3,5,6,7,8,9))%>%  #removes unwanted columns
         rename(PORTAL.NAME = 1, YESTERDAY = 2) %>% #renames column
-        lapply(gsub, pattern='"', replacement='') %>%
-        as.data.frame() %>%
         mutate(PORTAL.SERVER = "SMA")%>% #adds PORTAL.SERVER column
         filter(YESTERDAY== "No data" | YESTERDAY == "0.00") %>% #filters sites that have no data and 0 production
         select(PORTAL.NAME, PORTAL.SERVER)%>% #selects columns wanted
