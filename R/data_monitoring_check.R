@@ -20,11 +20,12 @@ data_monitoring_check<- function(se_raw, sma_raw, sp_raw, lg_raw, status, client
         select(PORTAL.NAME, PORTAL.SERVER) %>% #selects columns wanted
         left_join(status %>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME")%>% #joins recent down dm list with current portal status
         left_join(clients, by = "PORTAL.NAME") #joins filtered & joined recent down dm list with the portal key to gather FACILITY.NAME and JOB.NAME
-      
-      sma <- sma_raw %>% select(-c(2,3,5,6,7,8,9))%>%  #removes unwanted columns
+    
+      sma <- sma_raw %>% select(-c(2,3,5,6,7,8,9)) %>% #removes unwanted columns
         rename(PORTAL.NAME = 1, YESTERDAY = 2) %>% #renames column
         mutate(PORTAL.SERVER = "SMA")%>% #adds PORTAL.SERVER column
-        filter(YESTERDAY== "No data" | YESTERDAY == "0.00") %>% #filters sites that have no data and 0 production
+        mutate(PORTAL.NAME = str_remove_all(PORTAL.NAME, '"'))%>%
+        filter(YESTERDAY== "No data" | YESTERDAY == "0.00")%>%  #filters sites that have no data and 0 production
         select(PORTAL.NAME, PORTAL.SERVER)%>% #selects columns wanted
         left_join(status%>% select(PORTAL.NAME, STATUS, CATEGORY, DATE, YEAR, NOTES), by = "PORTAL.NAME")%>% #joins recent down dm list with current portal status
         left_join(clients, by = "PORTAL.NAME")#joins filtered & joined recent down dm list with the portal key to gather FACILITY.NAME and JOB.NAME
