@@ -1,2 +1,2 @@
 # TFS Data Monitoring
-Functions for automating tasks to monitor photovoltaic data.
+Package Developed for Streamined Functions in Automating Tasks to Monitor Photovoltaic Data.
